@@ -20,7 +20,7 @@ function LIS2MDL(options,r,w) {
   this.w = w;
   if (this.r(REG.WHO_AM_I,1)[0]!=20) throw new Error("WHO_AM_I incorrect");
   // Temp compensation, 10Hz continuous readings
-  this.w(REG.CNTL1, 0x90); //config 1 0 0 1 0 0 0 0
+  this.w(REG.CNTL1, 0x41); //config 1 0 0 1 0 0 0 0
   // low pass filter, ODR/4
   //this.w(REG.CFG_B, 0x01);
   // data ready irq, block data read

@@ -45,9 +45,9 @@ LIS2MDL.prototype.read = function() {
     dx: dx.getInt16(0,1),
     dy: dy.getInt16(0,1),
     dz: dz.getInt16(0,1),
-    xL: this.r(REG.OUTX_L,2),
+    xL: this.r(REG.OUTX_L,1),
     yL: this.r(REG.OUTY_L,1),
-    zL: this.r(REG.OUTZ_L,2),
+    zL: this.r(REG.OUTZ_L,1),
     xH: this.r(REG.OUTX_H,1),
     yH: this.r(REG.OUTY_H,1),
     zH: this.r(REG.OUTZ_H,1)

@@ -62,6 +62,6 @@ exports.connectI2C = function(i2c, options) {
     i2c.writeTo(a, reg);
     return i2c.readFrom(a, len);
   }, function(reg, data) { // write
-    i2c.writeTo(a, [reg, data]);
+    i2c.writeTo(a, [reg, data]); 
   }));
 };

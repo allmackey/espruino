@@ -38,9 +38,9 @@ LIS2MDL.prototype.read = function() {
   var dy = new DataView(this.r(REG.OUTY_L,1).buffer);
   var dz = new DataView(this.r(REG.OUTZ_L,1).buffer);
   return {
-    x: dx.getInt16(0,1),
-    y: dy.getInt16(0,1),
-    z: dz.getInt16(0,1)
+    x: dx.getInt8(0,1),
+    y: dy.getInt8(0,1),
+    z: dz.getInt8(0,1)
   };
 };
 exports.LIS2MDL = LIS2MDL;

@@ -16,7 +16,7 @@ var REG = {
 function LIS2MDL(options,r,w) {
   this.r = r;
   this.w = w;
-  if (this.r(REG.WHO_AM_I,1)[0]!=64) throw new Error("WHO_AM_I incorrect");
+  if (this.r(REG.WHO_AM_I,1)[0]!=64) throw new Error(this.r(REG.WHO_AM_I,1));
   // Temp compensation, 10Hz continuous readings
   //this.w(REG.CFG_A, 0x80);
   // low pass filter, ODR/4

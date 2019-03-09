@@ -34,14 +34,14 @@ LIS2MDL.prototype.off = function() {
 
 //tt
 LIS2MDL.prototype.read = function() {
-  var dx = new DataView(this.r(REG.OUTX_L,1).buffer);
-  var dy = new DataView(this.r(REG.OUTY_L,1).buffer);
-  var dz = new DataView(this.r(REG.OUTZ_L,1).buffer);
+  //var dx = new DataView(this.r(REG.OUTX_L,1).buffer);
+  //var dy = new DataView(this.r(REG.OUTY_L,1).buffer);
+  //var dz = new DataView(this.r(REG.OUTZ_L,1).buffer);
   return {
     //x: dx.getInt8(0,1),
-    x: dx,
-    y: dy,
-    z: dz
+    x: this.r(REG.OUTX_L,1),
+    y: this.r(REG.OUTY_L,1),
+    z: this.r(REG.OUTZ_L,1)
     //y: dy.getInt8(0,1),
     //z: dz.getInt8(0,1)
   };

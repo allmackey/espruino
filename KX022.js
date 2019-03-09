@@ -10,7 +10,7 @@ var REG = {
   CNTL1: 0x18,
   CNTL3: 0x1A,
   ODCNTL: 0x1B,
-  Tilt_T: 0x22
+  Tilt_T: 0x22,
   SLAVE: 0x1E,
   WAI_VAL: 0x14,
 };
@@ -19,11 +19,11 @@ function LIS2MDL(options,r,w) {
   this.w = w;
   if (this.r(REG.WHO_AM_I,1)[0]!=64) throw new Error("WHO_AM_I incorrect");
   // Temp compensation, 10Hz continuous readings
-  this.w(REG.CFG_A, 0x80);
+  //this.w(REG.CFG_A, 0x80);
   // low pass filter, ODR/4
-  this.w(REG.CFG_B, 0x01);
+  //this.w(REG.CFG_B, 0x01);
   // data ready irq, block data read
-  this.w(REG.CFG_C, 0x11);
+  //this.w(REG.CFG_C, 0x11);
 }
 LIS2MDL.prototype.off = function() {
   this.w(REG.CFG_A,0x03); // back to idle

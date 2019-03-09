@@ -1,5 +1,5 @@
 /* Written by Allen Mackey */
-var REG = {
+var REG = { 
   WHO_AM_I: 0x0F,
   OUTX_L: 0x06,
   OUTX_H: 0x07,

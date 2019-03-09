@@ -13,6 +13,8 @@ var REG = {
   SLAVE: 0x1E,
   WAI_VAL: 0x14,
 };
+
+//tt
 function LIS2MDL(options,r,w) {
   this.r = r;
   this.w = w;
@@ -24,9 +26,13 @@ function LIS2MDL(options,r,w) {
   // data ready irq, block data read
   //this.w(REG.CFG_C, 0x11);
 }
+
+//tt
 LIS2MDL.prototype.off = function() {
   this.w(REG.CFG_A,0x03); // back to idle
 };
+
+//tt
 LIS2MDL.prototype.read = function() {
   var d = new DataView(this.r(REG.OUTX_L,6).buffer);
   return {

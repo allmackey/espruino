@@ -34,11 +34,13 @@ LIS2MDL.prototype.off = function() {
 
 //tt
 LIS2MDL.prototype.read = function() {
-  var d = new DataView(this.r(REG.OUTX_L,6).buffer);
+  var dx = new DataView(this.r(REG.OUTX_L,1).buffer);
+  var dy = new DataView(this.r(REG.OUTY_L,1).buffer);
+  var dz = new DataView(this.r(REG.OUTZ_L,1).buffer);
   return {
-    x: d.getInt16(0,1),
-    y: d.getInt16(2,1),
-    z: d.getInt16(4,1)
+    x: dx.getInt16(0,1),
+    y: dy.getInt16(0,1),
+    z: dz.getInt16(0,1)
   };
 };
 exports.LIS2MDL = LIS2MDL;

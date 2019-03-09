@@ -40,12 +40,12 @@ LIS2MDL.prototype.read = function() {
   var dy = new DataView(this.r(REG.OUTY_L,2).buffer);
   var dz = new DataView(this.r(REG.OUTZ_L,2).buffer);
   return {
-    x: d.getInt32(0,1),
-    y: d.getInt32(2,1),
-    z: d.getInt32(4,1),
-    dx: dx.getInt32(0,1),
-    dy: dy.getInt32(0,1),
-    dz: dz.getInt32(0,1),
+    x: d.getInt316(0,1),
+    y: d.getInt16(2,1),
+    z: d.getInt16(4,1),
+    dx: dx.getInt16(0,1),
+    dy: dy.getInt16(0,1),
+    dz: dz.getInt16(0,1),
     xL: this.r(REG.OUTX_L,1),
     yL: this.r(REG.OUTY_L,1),
     zL: this.r(REG.OUTZ_L,1),

@@ -20,7 +20,7 @@ function LIS2MDL(options,r,w) {
   this.w = w;
   if (this.r(REG.WHO_AM_I,1)[0]!=20) throw new Error("WHO_AM_I incorrect");
   // Temp compensation, 10Hz continuous readings
-  this.w(REG.CNTL1, 0x90);
+  this.w(REG.CNTL1, 0x90); //config 1 0 0 1 0 0 0 0
   // low pass filter, ODR/4
   //this.w(REG.CFG_B, 0x01);
   // data ready irq, block data read
@@ -34,19 +34,19 @@ LIS2MDL.prototype.off = function() {
 
 //tt
 LIS2MDL.prototype.read = function() {
-  //var dx = new DataView(this.r(REG.OUTX_L,1).buffer);
-  //var dy = new DataView(this.r(REG.OUTY_L,1).buffer);
-  //var dz = new DataView(this.r(REG.OUTZ_L,1).buffer);
+  var dx = new DataView(this.r(REG.OUTX_L,2).buffer);
+  var dy = new DataView(this.r(REG.OUTY_L,2).buffer);
+  var dz = new DataView(this.r(REG.OUTZ_L,2).buffer);
   return {
-    //x: dx.getInt8(0,1),
-    xL: this.r(REG.OUTX_L,1),
+    dx: dx.getInt16(0,1),
+    dy: dy.getInt16(0,1),
+    dz: dz.getInt16(0,1),
+    xL: this.r(REG.OUTX_L,2),
     yL: this.r(REG.OUTY_L,1),
-    zL: this.r(REG.OUTZ_L,1),
+    zL: this.r(REG.OUTZ_L,2),
     xH: this.r(REG.OUTX_H,1),
     yH: this.r(REG.OUTY_H,1),
     zH: this.r(REG.OUTZ_H,1)
-    //y: dy.getInt8(0,1),
-    //z: dz.getInt8(0,1)
   };
 };
 exports.LIS2MDL = LIS2MDL;

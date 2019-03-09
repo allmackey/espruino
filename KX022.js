@@ -10,7 +10,6 @@ var REG = {
   CNTL1: 0x18,
   CNTL3: 0x1A,
   ODCNTL: 0x1B,
-  Tilt_T: 0x22,
   SLAVE: 0x1E,
   WAI_VAL: 0x14,
 };

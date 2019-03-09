@@ -41,7 +41,7 @@ LIS2MDL.prototype.read = function() {
   return {
     x: d.getInt16(0,1),
     y: d.getInt16(2,1),
-    z: d.getInt16(4,1)
+    z: d.getInt16(4,1),
     dx: dx.getInt16(0,1),
     dy: dy.getInt16(0,1),
     dz: dz.getInt16(0,1),

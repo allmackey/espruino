@@ -42,22 +42,16 @@ LIS2MDL.prototype.off = function() {
 //tt
 LIS2MDL.prototype.read = function() {
   var d = new DataView(this.r(REG.OUTX_L,6).buffer);
-  var dx = new DataView(this.r(REG.OUTX_L,2).buffer);
-  var dy = new DataView(this.r(REG.OUTY_L,2).buffer);
-  var dz = new DataView(this.r(REG.OUTZ_L,2).buffer);
   return {
-    x: d.getInt16(0,1),
-    y: d.getInt16(2,1),
-    z: d.getInt16(4,1),
-    dx: dx.getInt16(0,1),
-    dy: dy.getInt16(0,1),
-    dz: dz.getInt16(0,1),
-    xL: new DataView(this.r(REG.OUTX_L,1).buffer),
-    yL: new DataView(this.r(REG.OUTY_L,1).buffer),
-    zL: new DataView(this.r(REG.OUTZ_L,1).buffer),
-    xH: new DataView(this.r(REG.OUTX_H,1).buffer),
-    yH: new DataView(this.r(REG.OUTY_H,1).buffer),
-    zH: new DataView(this.r(REG.OUTZ_H,1).buffer)
+    x:  d.getInt16(0,1),
+    y:  d.getInt16(2,1),
+    z:  d.getInt16(4,1),
+    xL: d.getInt8(0,1),
+    yL: d.getInt8(2,1),
+    zL: d.getInt8(4,1),
+    xH: d.getInt8(1,1),
+    yH: d.getInt8(3,1),
+    zH: d.getInt8(5,1)
   };
 };
 exports.LIS2MDL = LIS2MDL;

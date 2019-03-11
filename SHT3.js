@@ -22,7 +22,7 @@ SHT2x.prototype.checkCrc = function(bytes, bytesLen, checksum) {
     crc ^= bytes[i];
     for (var bit = 8; bit > 0; --bit) {
       crc = (crc & 0x80) ? ((crc << 1) ^ C.POLYNOMIAL) : (crc << 1);
-    }
+    } 
   }
   if (crc !== checksum) {
     throw "CRC Error";

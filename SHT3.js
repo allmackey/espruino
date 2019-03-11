@@ -3,7 +3,7 @@
 /* Module for SHT20/21/25 Humidity and Temperature Sensor IC */
 
 var C = {
-  ADDR: 0x45,
+  ADDR: 0x40,
   POLYNOMIAL: 0x131
 };
 
@@ -40,7 +40,7 @@ SHT2x.prototype.readTemperature = function() {
   var value = (result[0] << 8) | (result[1] & ~0x03);
   //this.checkCrc(result, 2, result[2]);
   if (!value) {
-    return null;
+    return result;
   }
   return -46.85 + 175.72 / 65536.0 * value;
 };
@@ -51,7 +51,7 @@ SHT2x.prototype.readHumidity = function() {
   var value = (result[0] << 8) | (result[1] & ~0x03);
  // this.checkCrc(result, 2, result[2]);
   if (!value) {
-    return null;
+    return result;
   }
   return  -6.0 + 125.0 / 65536.0 * value;
 };

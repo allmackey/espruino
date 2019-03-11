@@ -28,5 +28,5 @@ exports.get = function(options) {
 };
 
 exports.advertise = function(options) {
-  NRF.setAdvertising([exports.get(options)], {interval:500});
+  NRF.setAdvertising([exports.get(options)], {interval:1000});
 };

@@ -3,7 +3,7 @@
 /* Module for SHT20/21/25 Humidity and Temperature Sensor IC */
 
 var C = {
-  ADDR: 0x40,
+  ADDR: 0x45,
   POLYNOMIAL: 0x131
 };
 

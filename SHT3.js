@@ -30,7 +30,7 @@ SHT2x.prototype.checkCrc = function(bytes, bytesLen, checksum) {
 };
 
 SHT2x.prototype.readTemperature = function() {
-  print("v3");
+  print("v4");
   print(this.addr);
   this.i2c.writeTo(this.addr, [0x24, 0x00]);
   var result = this.i2c.readFrom(this.addr, 3);
@@ -39,7 +39,7 @@ SHT2x.prototype.readTemperature = function() {
   if (!value) {
     return null;
   }
-  return -46.85 + 175.72 / 65536.0 * value;
+  return -49 + 315 / 65535.0 * value;
 };
 
 SHT2x.prototype.readHumidity = function() {
@@ -50,5 +50,5 @@ SHT2x.prototype.readHumidity = function() {
   if (!value) {
     return null;
   }
-  return  -6.0 + 125.0 / 65536.0 * value;
+  return  100 / 65536.0 * value;
 };

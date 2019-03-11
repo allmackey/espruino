@@ -33,7 +33,8 @@ SHT2x.prototype.readTemperature = function() {
   //this.i2c.writeTo(this.addr, 0xe3);
   this.i2c.writeTo(this.addr, 0x2400);
   //this.i2c.writeTo(0x00, 1);
-  var t=getTime()+15;while(getTime()&lt;t);
+  var t=getTime()+15;
+  while(getTime()&lt;t);
   var result = this.i2c.readFrom(this.addr, 3);
   var value = (result[0] << 8) | (result[1] & ~0x03);
   //this.checkCrc(result, 2, result[2]);

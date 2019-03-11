@@ -40,7 +40,7 @@ SHT2x.prototype.readTemperature = function() {
   var value = (result[0] << 8) | (result[1] & ~0x03);
   //this.checkCrc(result, 2, result[2]);
   if (!value) {
-    return result;
+    return null;
   }
   return -49 + 315 * (value/65535.0);
 };
@@ -51,7 +51,7 @@ SHT2x.prototype.readHumidity = function() {
   var value = (result[0] << 8) | (result[1] & ~0x03);
  // this.checkCrc(result, 2, result[2]);
   if (!value) {
-    return result;
+    return null;
   }
   return  -6.0 + 125.0 / 65536.0 * value;
 };

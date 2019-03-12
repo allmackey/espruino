@@ -4,7 +4,7 @@
 
 var C = {
   ADDR: 0x40,
-  POLYNOMIAL: 0x131
+  POLYNOMIAL: 0x31
 };
 
 exports.connect = function (_i2c,_addr) {
@@ -30,7 +30,7 @@ SHT2x.prototype.checkCrc = function(bytes, bytesLen, checksum) {
 };
 
 SHT2x.prototype.readTemperature = function() {
-  print("v1");
+  print("v2");
   print(this.addr);
   this.i2c.writeTo(this.addr, [0x2c, 0x06]);
   var result = this.i2c.readFrom(this.addr, 3);

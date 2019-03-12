@@ -38,7 +38,7 @@ SHT2x.prototype.readTemperature = function() {
   var result = this.i2c.readFrom(this.addr, 3);
   var value = (result[0] << 8) | (result[1] & ~0x03);
   //this.checkCrc(result, 2, result[2]);
-  if (!value) {
+  if (!value) { 
     return null;
   }
   return -49 + 315 / 65535.0 * value;

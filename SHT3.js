@@ -32,13 +32,13 @@ SHT2x.prototype.checkCrc = function(bytes, bytesLen, checksum) {
 };
 
 SHT2x.prototype.readData = function() {
-  print("v7");
-  print(this.addr);
+  //print("v7");
+  //print(this.addr);
   this.i2c.writeTo(this.addr, [0x2c, 0x06]);
   var result = this.i2c.readFrom(this.addr, 6);
   var t = (result[0] << 8) | (result[1] & ~0x03);
   var h = (result[3] << 8) | (result[4] & ~0x03);
-  print(result);
+  //print(result);
   //this.checkCrc(result, 2, result[2]);
   var d = new DataView(result.buffer);
   return {

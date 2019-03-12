@@ -53,4 +53,4 @@ SHT2x.prototype.readHumidity = function() {
     return null;
   }
   return  100.0 / 65535.0 * value;
-};
+}; 

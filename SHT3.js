@@ -32,7 +32,7 @@ SHT2x.prototype.checkCrc = function(bytes, bytesLen, checksum) {
 SHT2x.prototype.readTemperature = function() {
   print("V1");
   print(this.addr);
-  this.i2c.writeTo(this.addr, 0xe3);
+  this.i2c.writeTo(this.addr, [0x2c, 0x06]);
   var result = this.i2c.readFrom(this.addr, 3);
   var value = (result[0] << 8) | (result[1] & ~0x03);
   //this.checkCrc(result, 2, result[2]);

@@ -55,3 +55,5 @@ var t = setInterval(function () {
 }, 10000);
 //ffff0215000000000000615342c731034303670f0cbe0001c5 
 //clearInterval(t);
+//http://www.espruino.com/binaries/travis/master/ 
+//curl http://www.espruino.com/binaries/travis/master/espruino_2v01.70_nrf52832.hex -o bootloaderNRF2v01.70.hex

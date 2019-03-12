@@ -1,6 +1,4 @@
-/* Copyright (c) 2017 Uri Shaked, released under the MIT license */
-
-/* Module for SHT20/21/25 Humidity and Temperature Sensor IC */
+/* Module for SHT3x Humidity and Temperature Sensor IC */
 
 var C = {
   ADDR: 0x40,

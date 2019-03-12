@@ -1,4 +1,4 @@
-/*var t = setInterval(function () {
+var t = setInterval(function () {
   // set up I2C
   var i2c = new I2C();
   i2c.setup({ scl : D30, sda: D31 });
@@ -34,17 +34,24 @@
   print(yH);
   print(zL);
   print(zH);
+  
+  var sht =  require("https://github.com/allmackey/espruino/blob/master/SHT3.js").connect(i2c,0x44);
+  var tH = sht.readData().tH;
+  var tL = sht.readData().tL;
+  var hH = sht.readData().hH;
+  var hL = sht.readData().hL;
+  print(tH);
+  print(tL);
+  print(hH);
+  print(hL);
+  
   require("https://github.com/allmackey/espruino/blob/master/BrewBeacon.js").advertise({
-
-    uuid : [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, xL, xH, yL, yH, zL, zH], // ibeacon uuid
+    uuid : [0, 0, 0, 0, 0, 0, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
     major : batt, // optional
     minor : 0x0001, // optional
     rssi : -59, // optional RSSI at 1 meter distance in dBm
     manufacturer:0x0001
   });
-}, 10000);*/
-
+}, 10000);
+//ffff0215000000000000615342c731034303670f0cbe0001c5 
 //clearInterval(t);
-var i2c = new I2C();
-i2c.setup({ scl : D30, sda: D31 });
-var sht = require("https://github.com/allmackey/espruino/blob/master/SHT3.js").connect(I2C1);

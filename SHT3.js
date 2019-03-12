@@ -30,7 +30,7 @@ SHT2x.prototype.checkCrc = function(bytes, bytesLen, checksum) {
 };
 
 SHT2x.prototype.readTemperature = function() {
-  print("v0");
+  print("v1");
   print(this.addr);
   //var t=getTime()+1000;
   //while(getTime()<t);

@@ -42,9 +42,6 @@ SHT2x.prototype.readTemperature = function() {
   var h = (result[3] << 8) | (result[4] & ~0x03);
   print(result);
   //this.checkCrc(result, 2, result[2]);
-  if (!value) {
-    return null;
-  }
   var d = new DataView(this.i2c.readFrom(this.addr,6).buffer);
   return {
     tH: d.getInt8(0,1),

@@ -35,12 +35,12 @@ SHT2x.prototype.readTemperature = function() {
   print("v5");
   print(this.addr);
   this.i2c.writeTo(this.addr, [0x2c, 0x06]);
-  var result = this.i2c.readFrom(this.addr, 3);
+  var result = this.i2c.readFrom(this.addr, 6);
   var t = (result[0] << 8) | (result[1] & ~0x03);
   var h = (result[3] << 8) | (result[4] & ~0x03);
   print(result);
   //this.checkCrc(result, 2, result[2]);
-  var d = new DataView(this.i2c.readFrom(this.addr,6).buffer);
+  var d = new DataView(result.buffer);
   return {
     tH: d.getInt8(0,1),
     tL: d.getInt8(1,1),

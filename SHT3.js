@@ -34,27 +34,24 @@ SHT2x.prototype.checkCrc = function(bytes, bytesLen, checksum) {
 };
 
 SHT2x.prototype.readTemperature = function() {
-  print("v2");
+  print("v4");
   print(this.addr);
   this.i2c.writeTo(this.addr, [0x2c, 0x06]);
   var result = this.i2c.readFrom(this.addr, 3);
-  var value = (result[0] << 8) | (result[1] & ~0x03);
+  var t = (result[0] << 8) | (result[1] & ~0x03);
+  var h = (result[3] << 8) | (result[4] & ~0x03);
   print(result);
-  this.checkCrc(result, 2, result[2]);
+  //this.checkCrc(result, 2, result[2]);
   if (!value) {
     return null;
   }
-  return -49 + 315 / 65535.0 * value;
-};
-
-SHT2x.prototype.readHumidity = function() {
-  this.i2c.writeTo(this.addr, [0x2c, 0x06]);
-  var result = this.i2c.readFrom(this.addr, 6);
-  var value = (result[3] << 8) | (result[4] & ~0x03);
-  print(result);
-  //this.checkCrc(result, 2, result[5]);
-  if (!value) {
-    return null;
-  }
-  return  100 / 65535.0 * value;
+  var d = new DataView(this.i2c.readFrom(this.addr,6).buffer);
+  return {
+    tH: d.getInt8(0,1),
+    tL: d.getInt8(1,1),
+    hH: d.getInt16(3,1),
+    hL: d.getInt8(4,1),
+    tfV: -49.0 + 315.0 / 65535.0 * t,
+    hfV: 100.0 / 65535.0 * h
+  };
 };

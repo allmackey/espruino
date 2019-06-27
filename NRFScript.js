@@ -53,6 +53,8 @@ var t = setInterval(function () {
     manufacturer:0x0001
   });
 }, 10000);
+//NRF.sleep();
+//NRF.wake();
 //ffff0215000000000000615342c731034303670f0cbe0001c5 
 //clearInterval(t);
 //http://www.espruino.com/binaries/travis/master/ 

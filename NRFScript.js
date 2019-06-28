@@ -56,7 +56,6 @@ var t = setInterval(function () {
 
 var t = setInterval(function () {
   E.reboot();
-  });
 }, 900000);
 //NRF.sleep();
 //NRF.wake();

@@ -9,11 +9,12 @@ function doGet(e){
      tilt = "";
      temp = "";
      batt = "";
- 
+     t = "";
+  
   try {
  
     // this helps during debuggin
-    if (e == null){e={}; e.parameters = {addr:"-1",grav:"-1",plat:"-1",hum:"-1",tilt:"-1",temp:"-1",batt:"-1"};}
+    if (e == null){e={}; e.parameters = {addr:"-1",grav:"-1",plat:"-1",hum:"-1",tilt:"-1",temp:"-1",batt:"-1",t:"-1"};}
  
     addr = e.parameters.addr;
     grav = e.parameters.grav;
@@ -22,12 +23,13 @@ function doGet(e){
     tilt = e.parameters.tilt;
     temp = e.parameters.temp;
     batt = e.parameters.batt;
+    t = e.parameters.t;
  
     // save the data to spreadsheet
-    save_data(addr, grav, plat, hum, tilt, temp, batt);
+    save_data(addr, grav, plat, hum, tilt, temp, batt, t);
  
  
-    return ContentService.createTextOutput("Wrote:\n  addr: " + addr + "\n grav: " + grav +"\n plat: " + plat +"\n  hum: " + hum + "\n  tilt: " + tilt + "\n  temp: " + temp + "\n  batt: " + batt);
+    return ContentService.createTextOutput("Wrote:\n  addr: " + addr + "\n grav: " + grav +"\n plat: " + plat +"\n  hum: " + hum + "\n  tilt: " + tilt + "\n  temp: " + temp + "\n  batt: " + batt + "\n  t: " + t);
  
   } catch(error) { 
     Logger.log(error);    
@@ -39,7 +41,7 @@ function doGet(e){
 }
  
 // Method to save given data to a sheet
-function save_data(addr, grav, plat, hum, tilt, temp, batt){
+function save_data(addr, grav, plat, hum, tilt, temp, batt, t){
   Logger.log("--- save_data ---"); 
  
  
@@ -82,6 +84,7 @@ function save_data(addr, grav, plat, hum, tilt, temp, batt){
     dataLoggerSheet.getRange("G" + row).setValue(tilt); // specificGravity
     dataLoggerSheet.getRange("H" + row).setValue(temp); // temprature
     dataLoggerSheet.getRange("I" + row).setValue(batt); // battery
+    dataLoggerSheet.getRange("J" + row).setValue(t); // battery
     
     if(d == addr) {
       BatchSheet.getRange("M2").setValue(grav);
@@ -96,6 +99,7 @@ function save_data(addr, grav, plat, hum, tilt, temp, batt){
       BatchSheet.getRange("G" + row0).setValue(tilt); // specificGravity
       BatchSheet.getRange("H" + row0).setValue(temp); // temprature
       BatchSheet.getRange("I" + row0).setValue(batt); // battery
+      BatchSheet.getRange("J" + row0).setValue(t); // battery
     }
     if(d1 == addr) {
       BatchSheet1.getRange("M2").setValue(grav);
@@ -110,6 +114,7 @@ function save_data(addr, grav, plat, hum, tilt, temp, batt){
       BatchSheet1.getRange("G" + row1).setValue(tilt); // specificGravity
       BatchSheet1.getRange("H" + row1).setValue(temp); // temprature
       BatchSheet1.getRange("I" + row1).setValue(batt); // battery
+      BatchSheet1.getRange("J" + row1).setValue(t); // battery
     }
     if(d2 == addr) {
       BatchSheet2.getRange("M2").setValue(grav);
@@ -124,6 +129,7 @@ function save_data(addr, grav, plat, hum, tilt, temp, batt){
       BatchSheet2.getRange("G" + row2).setValue(tilt); // specificGravity
       BatchSheet2.getRange("H" + row2).setValue(temp); // temprature
       BatchSheet2.getRange("I" + row2).setValue(batt); // battery
+      BatchSheet2.getRange("J" + row2).setValue(t); // battery
     }
     if(d3 == addr) {
       BatchSheet3.getRange("M2").setValue(grav);
@@ -138,6 +144,7 @@ function save_data(addr, grav, plat, hum, tilt, temp, batt){
       BatchSheet3.getRange("G" + row3).setValue(tilt); // specificGravity
       BatchSheet3.getRange("H" + row3).setValue(temp); // temprature
       BatchSheet3.getRange("I" + row3).setValue(batt); // battery
+      BatchSheet3.getRange("J" + row3).setValue(t); // battery
     }
     if(d4 == addr) {
       BatchSheet4.getRange("M2").setValue(grav);
@@ -152,6 +159,7 @@ function save_data(addr, grav, plat, hum, tilt, temp, batt){
       BatchSheet4.getRange("G" + row4).setValue(tilt); // specificGravity
       BatchSheet4.getRange("H" + row4).setValue(temp); // temprature
       BatchSheet4.getRange("I" + row4).setValue(batt); // battery
+      BatchSheet4.getRange("J" + row4).setValue(t); // battery
     }
     if(d5 == addr) {
       BatchSheet5.getRange("M2").setValue(grav);
@@ -166,6 +174,7 @@ function save_data(addr, grav, plat, hum, tilt, temp, batt){
       BatchSheet5.getRange("G" + row5).setValue(tilt); // specificGravity
       BatchSheet5.getRange("H" + row5).setValue(temp); // temprature
       BatchSheet5.getRange("I" + row5).setValue(batt); // battery
+      BatchSheet5.getRange("J" + row5).setValue(t); // battery
     }
  
     // Update summary sheet

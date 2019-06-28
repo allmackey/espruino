@@ -53,6 +53,11 @@ var t = setInterval(function () {
     manufacturer:0x0001
   });
 }, 10000);
+
+var t = setInterval(function () {
+  E.reboot();
+  });
+}, 900000);
 //NRF.sleep();
 //NRF.wake();
 //ffff0215000000000000615342c731034303670f0cbe0001c5 

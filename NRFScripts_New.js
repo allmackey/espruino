@@ -64,6 +64,11 @@ var t = setInterval(function () {
   print(tL);
   print(hH);
   print(hL);
-  nrfHandle.uuid = [0, 0, 0, 0, 0, 0, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH]; // ibeacon uuid
-  nrfHandle.major = batt;
+  require("https://github.com/allmackey/espruino/blob/master/BrewBeacon.js").advertise({
+  uuid : [0, 0, 0, 0, 0, 0, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
+  major : batt, // optional
+  minor : 0x0001, // optional
+  rssi : -59, // optional RSSI at 1 meter distance in dBm
+  manufacturer:0x0001
+});
 }, 10000);

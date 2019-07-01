@@ -52,7 +52,7 @@ var t = setInterval(function () {
     rssi : -59, // optional RSSI at 1 meter distance in dBm
     manufacturer:0x0001
   });
-}, 10000);
+}, 15000);
 
 var t = setInterval(function () {
   E.reboot();

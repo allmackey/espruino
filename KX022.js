@@ -62,7 +62,7 @@ LIS2MDL.prototype.read = function() {
   LIS2MDL.prototype.readcntr = function() {
   var d = new DataView(this.r(REG.CNTL1,1).buffer);
   return {
-    res:  d.getInt8(0,1)
+    res:  d.getInt8(0,1);
   };
   
 };

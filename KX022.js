@@ -28,10 +28,10 @@ function LIS2MDL(options,r,w) {
   if (this.r(REG.WHO_AM_I,1)[0]!=20) throw new Error("WHO_AM_I incorrect");
   // Temp compensation, 10Hz continuous readings
   //this.w(REG.CNTL1, 0x50); //config 0 1 0 1 0 0 0 0 OLD
-  this.w(REG.CNTL1, 0x10); //config 0 0 0 1 0 0 0 0 NEW
+  //this.w(REG.CNTL1, 0x10); //config 0 0 0 1 0 0 0 0 NEW
   //this.w(REG.CNTL1, 0xD0); //OLD
-  this.w(REG.LP_CNTL, 0x0B); //NEW
-  this.w(REG.CNTL1, 0x90); //NEW config 10010000
+  //this.w(REG.LP_CNTL, 0x0B); //NEW
+  //this.w(REG.CNTL1, 0x90); //NEW config 10010000
   // low pass filter, ODR/4
   //this.w(REG.CFG_B, 0x01);
   // data ready irq, block data read
@@ -39,8 +39,11 @@ function LIS2MDL(options,r,w) {
 }
 
 //tt
-LIS2MDL.prototype.off = function() {
-  this.w(REG.CFG_A,0x03); // back to idle
+LIS2MDL.prototype.init = function() {
+  this.w(REG.CNTL1, 0x10); //config 0 0 0 1 0 0 0 0 NEW
+  //this.w(REG.CNTL1, 0xD0); //OLD
+  this.w(REG.LP_CNTL, 0x0B); //NEW
+  this.w(REG.CNTL1, 0x90); //NEW config 10010000
 };
 
 //tt

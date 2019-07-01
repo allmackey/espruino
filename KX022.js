@@ -27,10 +27,10 @@ function LIS2MDL(options,r,w) {
   this.w = w;
   if (this.r(REG.WHO_AM_I,1)[0]!=20) throw new Error("WHO_AM_I incorrect");
   //this.w(REG.CNTL1, 0x50); //config 0 1 0 1 0 0 0 0 OLD
-  //this.w(REG.CNTL1, 0x10); //config 0 0 0 1 0 0 0 0 NEW
+  this.w(REG.CNTL1, 0x10); //config 0 0 0 1 0 0 0 0 NEW
   //this.w(REG.CNTL1, 0xD0); //OLD
-  //this.w(REG.LP_CNTL, 0x0B); //NEW
-  //this.w(REG.CNTL1, 0x90); //NEW config 10010000
+  this.w(REG.LP_CNTL, 0x0B); //NEW
+  this.w(REG.CNTL1, 0x90); //NEW config 10010000
   // low pass filter, ODR/4
   //this.w(REG.CFG_B, 0x01);
   // data ready irq, block data read

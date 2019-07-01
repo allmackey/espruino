@@ -60,6 +60,12 @@ LIS2MDL.prototype.read = function() {
     yH: d.getInt8(3,1),
     zH: d.getInt8(5,1)
   };
+  
+  LIS2MDL.prototype.readcntr = function() {
+  var d = new DataView(this.r(REG.CNTL1,1).buffer);
+  return {
+    res:  d.getInt8(0,1),
+  };
 };
 exports.LIS2MDL = LIS2MDL;
 

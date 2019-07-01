@@ -1,3 +1,10 @@
+E.on('init', function() {
+  var acc = require("https://github.com/allmackey/espruino/blob/master/KX022.js").connectI2C(i2c);
+  acc.init();
+  var res = acc.readcntr().res;
+  print(res);
+});
+
 var t = setInterval(function () {
   // set up I2C
   var i2c = new I2C();

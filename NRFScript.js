@@ -34,6 +34,7 @@ var t = setInterval(function () {
   print(yH);
   print(zL);
   print(zH);
+  acc.off(); //Turn Acc Off/sleep.
   
   var sht =  require("https://github.com/allmackey/espruino/blob/master/SHT3.js").connect(i2c,0x44);
   var tH = sht.readData().tH;

@@ -36,7 +36,7 @@ function LIS2MDL(options,r,w) {
   //this.w(REG.CFG_B, 0x01);
   // data ready irq, block data read
   //this.w(REG.CFG_C, 0x11);
-};
+}
 
 //tt
 LIS2MDL.prototype.init = function() {

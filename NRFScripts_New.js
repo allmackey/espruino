@@ -1,3 +1,4 @@
+var b = digitalRead(D25);
 var i2c = new I2C();
 i2c.setup({ scl : D30, sda: D31 });
 var acc = require("https://github.com/allmackey/espruino/blob/master/KX022.js").connectI2C(i2c);
@@ -17,15 +18,13 @@ var tH = 0;
 var tL = 0;
 var hH = 0;
 var hL = 0;
-var nrfHandle = require("https://github.com/allmackey/espruino/blob/master/BrewBeacon.js").advertise({
-  uuid : [0, 0, 0, 0, 0, 0, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
-  major : batt, // optional
-  minor : 0x0001, // optional
-  rssi : -59, // optional RSSI at 1 meter distance in dBm
-  manufacturer:0x0001
-});
 
 var t = setInterval(function () {
+  b = digitalRead(D25);
+  if(b==0) {
+    digitalWrite(D26, 1);
+    reset(true);
+  }
   xL = acc.read().xL;
   xH = acc.read().xH;
   yL = acc.read().yL;
@@ -48,22 +47,18 @@ var t = setInterval(function () {
   zL = Math.round(zL/ic);
   zH = Math.round(zH/ic);
   batt = Math.round(NRF.getBattery()*1000);
-  print(batt);
+  /*print(batt);
   print(xL);
   print(xH);
   print(yL);
   print(yH);
   print(zL);
-  print(zH);
+  print(zH);*/
 
   tH = sht.readData().tH;
   tL = sht.readData().tL;
   hH = sht.readData().hH;
   hL = sht.readData().hL;
-  print(tH);
-  print(tL);
-  print(hH);
-  print(hL);
   require("https://github.com/allmackey/espruino/blob/master/BrewBeacon.js").advertise({
   uuid : [0, 0, 0, 0, 0, 0, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
   major : batt, // optional
@@ -71,4 +66,9 @@ var t = setInterval(function () {
   rssi : -59, // optional RSSI at 1 meter distance in dBm
   manufacturer:0x0001
 });
-}, 10000);
+
+  //print(tH);
+  //print(tL);
+  //print(hH);
+  //print(hL);
+}, 30000);

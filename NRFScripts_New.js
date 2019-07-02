@@ -11,6 +11,13 @@ var yL = 0;
 var yH = 0;
 var zL = 0;
 var zH = 0;
+var xLOld = 0;
+var xHOld = 0;
+var yLOld = 0;
+var yHOld = 0;
+var zLOld = 0;
+var zHOld = 0;
+var cnt = 0;
 var batt = Math.round(NRF.getBattery()*1000);
 var ic = 75;
 var i = 0;
@@ -67,7 +74,21 @@ var t = setInterval(function () {
   rssi : -59, // optional RSSI at 1 meter distance in dBm
   manufacturer:0x0001
 });
-
+  if((xL==xLOld) && (xH==xHOld) && (yL==yLOld) && (yH==yHOld) && (zL==zLOld) && (zH==zHOld)) {
+    if(cnt >= 2) {
+      acc.init();
+      cnt = 0;
+    }
+    cnt++;
+  } else {
+    cnt = 0; 
+  }
+  xLOld = xL;
+  xHOld = xH;
+  yLOld = yL;
+  yHOld = yH;
+  zLOld = zL;
+  zHOld = zH;
   //print(tH);
   //print(tL);
   //print(hH);

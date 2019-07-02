@@ -39,7 +39,7 @@ function LIS2MDL(options,r,w) {
 
 //tt
 LIS2MDL.prototype.init = function() {
-  //this.w(REG.CNTL1, 0x10); //config 0 0 0 1 0 0 0 0 NEW
+  this.w(REG.CNTL1, 0x10); //config 0 0 0 1 0 0 0 0 NEW
 };
 
 //tt

@@ -19,7 +19,6 @@ var zLOld = 0;
 var zHOld = 0;
 var cnt = 0;
 var batt = Math.round(NRF.getBattery()*1000);
-var ic = 75;
 var i = 0;
 var sht =  require("https://github.com/allmackey/espruino/blob/master/SHT3.js").connect(i2c,0x44);
 var tH = 0;

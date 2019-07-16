@@ -65,8 +65,13 @@ LIS2MDL.prototype.init = function() {
 //tt
 LIS2MDL.prototype.read = function() {
   var d = new DataView(this.r(REG.OUTX_L,6).buffer);
+  var xx = d.getInt16(0,1);
+  var xHH = d.getInt8(1,1),
+  var xLL = d.getInt8(0,1),
+  if (xx > 16384) {xx = 16384;}
+  if (xx < -16384) {xx = -16384;}
   return {
-    x:  d.getInt16(0,1),
+    x:  xx,
     y:  d.getInt16(2,1),
     z:  d.getInt16(4,1),
     xL: d.getInt8(0,1),
@@ -75,7 +80,7 @@ LIS2MDL.prototype.read = function() {
     xH: d.getInt8(1,1),
     yH: d.getInt8(3,1),
     zH: d.getInt8(5,1)
-  };  
+  };
 };
 exports.LIS2MDL = LIS2MDL;
 

@@ -65,7 +65,7 @@ LIS2MDL.prototype.init = function() {
 //tt
 LIS2MDL.prototype.read = function() {
   var d = new DataView(this.r(REG.OUTX_L,6).buffer);
-  print("v2");
+  print("v3");
   return {
     x:  d.getInt16(0,1),
     y:  d.getInt16(2,1),

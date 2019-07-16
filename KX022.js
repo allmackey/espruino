@@ -67,8 +67,8 @@ LIS2MDL.prototype.init = function() {
 LIS2MDL.prototype.read = function() {
   var d = new DataView(this.r(REG.OUTX_L,6).buffer);
   var xx = d.getInt16(0,1);
-  var xHH = d.getInt8(1,1);
-  var xLL = d.getInt8(0,1);
+  //var xHH = d.getInt8(1,1);
+  //var xLL = d.getInt8(0,1);
   if (xx > 16384) {xx = 16384;}
   if (xx < -16384) {xx = -16384;}
   return {

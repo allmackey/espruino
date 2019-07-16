@@ -60,29 +60,46 @@ LIS2MDL.prototype.init = function() {
   this.w(REG.CNTL1, 0x90); //NEW config 10010000
   res = new DataView(this.r(REG.CNTL1,1).buffer);
   print(res.getUint8(0,1));*/
-  print("V2");
+  print("V3");
 };
 
 //tt
 LIS2MDL.prototype.read = function() {
   var d = new DataView(this.r(REG.OUTX_L,6).buffer);
   var xx = d.getInt16(0,1);
-  //var xHH = d.getInt8(1,1);
-  //var xLL = d.getInt8(0,1);
+  var yy = d.getInt16(2,1);
+  var zz = d.getInt16(4,1);
+  var xp = 0;
+  var yp = 0;
+  var zp = 0;
   if (xx > 16384) {xx = 16384;}
   if (xx < -16384) {xx = -16384;}
+  if (xx < 0) {xp=1;}
   var xLL = xx & 0xff;
   var xHH = (xx >> 8);
+  if (yy > 16384) {yy = 16384;}
+  if (yy < -16384) {yy = -16384;}
+  if (yy < 0) {yp=1;}
+  var yLL = yy & 0xff;
+  var yHH = (yy >> 8);
+  if (zz > 16384) {zz = 16384;}
+  if (zz < -16384) {zz = -16384;}
+  if (zz < 0) {zp=1;}
+  var zLL = zz & 0xff;
+  var zHH = (zz >> 8);
   return {
     x:  xx,
-    y:  d.getInt16(2,1),
-    z:  d.getInt16(4,1),
+    y:  yy, //d.getInt16(2,1),
+    z:  zz, //d.getInt16(4,1),
     xL: xLL, //d.getInt8(0,1),
-    yL: d.getInt8(2,1),
-    zL: d.getInt8(4,1),
+    yL: yLL, //d.getInt8(2,1),
+    zL: zLL, //d.getInt8(4,1),
     xH: xHH, //d.getInt8(1,1),
-    yH: d.getInt8(3,1),
-    zH: d.getInt8(5,1)
+    yH: yHH, //d.getInt8(3,1),
+    zH: zHH, //d.getInt8(5,1),
+    xP: xp,
+    yP: yp,
+    zP: zp
   };
 };
 exports.LIS2MDL = LIS2MDL;

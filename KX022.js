@@ -71,8 +71,8 @@ LIS2MDL.prototype.read = function() {
   //var xLL = d.getInt8(0,1);
   if (xx > 16384) {xx = 16384;}
   if (xx < -16384) {xx = -16384;}
-  uint8_t xLL = xx & 0xff;
-  uint8_t xHH = (xx >> 8);
+  var xLL = xx & 0xff;
+  var xHH = (xx >> 8);
   return {
     x:  xx,
     y:  d.getInt16(2,1),

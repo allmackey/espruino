@@ -60,7 +60,7 @@ LIS2MDL.prototype.init = function() {
   this.w(REG.CNTL1, 0x90); //NEW config 10010000
   res = new DataView(this.r(REG.CNTL1,1).buffer);
   print(res.getUint8(0,1));*/
-  print("V4");
+  //print("V4");
 };
 
 //tt

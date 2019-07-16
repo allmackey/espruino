@@ -3,7 +3,7 @@ var i2c = new I2C();
 i2c.setup({ scl : D30, sda: D31 });
 var acc = require("https://github.com/allmackey/espruino/blob/master/KX022.js").connectI2C(i2c);
 acc.init();
-var ic = 75;
+var ic = 1;
 var i = 0;
 var xL = 0;
 var xH = 0;
@@ -11,6 +11,9 @@ var yL = 0;
 var yH = 0;
 var zL = 0;
 var zH = 0;
+var xP = 0;
+var yP = 0;
+var zP = 0;
 var xLOld = 0;
 var xHOld = 0;
 var yLOld = 0;
@@ -38,7 +41,10 @@ var t = setInterval(function () {
   yH = acc.read().yH;
   zL = acc.read().zL;
   zH = acc.read().zH;
-    i = 0;
+  xP = acc.read().xP;
+  yP = acc.read().yP;
+  zP = acc.read().zP;
+ /*   i = 0;
   for(i=0; i<ic; i++) {
     xL = xL + acc.read().xL;
     xH = xH + acc.read().xH;
@@ -46,7 +52,7 @@ var t = setInterval(function () {
     yH = yH + acc.read().yH;
     zL = zL + acc.read().zL;
     zH = zH + acc.read().zH;
-  }
+  }*/
   xL = Math.round(xL/ic);
   xH = Math.round(xH/ic);
   yL = Math.round(yL/ic);
@@ -67,7 +73,7 @@ var t = setInterval(function () {
   hH = sht.readData().hH;
   hL = sht.readData().hL;
   require("https://github.com/allmackey/espruino/blob/master/BrewBeacon.js").advertise({
-  uuid : [0, 0, 0, 0, 0, 0, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
+  uuid : [0, 0, 0, zP, yP, xP, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
   major : batt, // optional
   minor : 0x0001, // optional
   rssi : -59, // optional RSSI at 1 meter distance in dBm

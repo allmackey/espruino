@@ -60,7 +60,7 @@ LIS2MDL.prototype.init = function() {
   this.w(REG.CNTL1, 0x90); //NEW config 10010000
   res = new DataView(this.r(REG.CNTL1,1).buffer);
   print(res.getUint8(0,1));*/
-  print("V3");
+  print("V4");
 };
 
 //tt
@@ -74,17 +74,17 @@ LIS2MDL.prototype.read = function() {
   var zp = 0;
   if (xx > 16384) {xx = 16384;}
   if (xx < -16384) {xx = -16384;}
-  if (xx < 0) {xp=1;}
+  if (xx < 0) {xp=1; xx=-xx;}
   var xLL = xx & 0xff;
   var xHH = (xx >> 8);
   if (yy > 16384) {yy = 16384;}
   if (yy < -16384) {yy = -16384;}
-  if (yy < 0) {yp=1;}
+  if (yy < 0) {yp=1; yy=-yy;}
   var yLL = yy & 0xff;
   var yHH = (yy >> 8);
   if (zz > 16384) {zz = 16384;}
   if (zz < -16384) {zz = -16384;}
-  if (zz < 0) {zp=1;}
+  if (zz < 0) {zp=1; zz=-zz;}
   var zLL = zz & 0xff;
   var zHH = (zz >> 8);
   return {

@@ -39,7 +39,7 @@ function LIS2MDL(options,r,w) {
 
 //tt
 LIS2MDL.prototype.init = function() {
-  print("setting changes made (new0)");
+  print("setting changes made (new1)");
   var res = new DataView(this.r(REG.CNTL1,1).buffer);
   this.w(REG.CNTL1, 0x00); //config 0 0 0 0 0 0 0 0
   res = new DataView(this.r(REG.CNTL1,1).buffer);
@@ -94,7 +94,7 @@ LIS2MDL.prototype.read = function() {
     zH: zHH, //d.getInt8(5,1),
     xP: xp,
     yP: yp,
-    zP: zp
+    zP: zp,
     pitch: Pitch,
     roll: Roll,
     tilt: Tilt

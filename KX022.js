@@ -81,7 +81,7 @@ LIS2MDL.prototype.read = function() {
   var zHH = (zz >> 8);
   var Pitch = (Math.atan2(yy, Math.sqrt(xx * xx + zz * zz))) * 180.00 / Math.PI;
   var Roll = (Math.atan2(xx, Math.sqrt(yy * yy + zz * zz))) * 180.00 / Math.PI;
-  var Tilt =  =  Mathsqrt(Pitch * Pitch + Roll * Roll);
+  var Tilt =  Math.sqrt(Pitch * Pitch + Roll * Roll);
   return {
     x:  xx,
     y:  yy, //d.getInt16(2,1),

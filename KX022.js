@@ -79,6 +79,8 @@ LIS2MDL.prototype.read = function() {
   if (zz < 0) {zp=1; zz=-zz;}
   var zLL = zz & 0xff;
   var zHH = (zz >> 8);
+  var Pitch = (Math.atan2(yy, Math.sqrt(xx * xx + zz * zz))) * 180.00 / Math.PI;
+  var Roll = (Math.atan2(xx, Math.sqrt(yy * yy + zz * zz))) * 180.00 / Math.PI;
   return {
     x:  xx,
     y:  yy, //d.getInt16(2,1),
@@ -91,7 +93,9 @@ LIS2MDL.prototype.read = function() {
     zH: zHH, //d.getInt8(5,1),
     xP: xp,
     yP: yp,
-    zP: zp
+    zP: zp,
+    pitch: Pitch,
+    roll: Roll
   };
 };
 exports.LIS2MDL = LIS2MDL;

@@ -39,7 +39,7 @@ function LIS2MDL(options,r,w) {
 
 //tt
 LIS2MDL.prototype.init = function() {
-  print("setting changes made (new1)");
+  print("setting changes made (new0)");
   var res = new DataView(this.r(REG.CNTL1,1).buffer);
   this.w(REG.CNTL1, 0x00); //config 0 0 0 0 0 0 0 0
   res = new DataView(this.r(REG.CNTL1,1).buffer);
@@ -64,6 +64,9 @@ LIS2MDL.prototype.read = function() {
   var xp = 0;
   var yp = 0;
   var zp = 0;
+  var Pitch = (Math.atan2(yy, Math.sqrt(xx * xx + zz * zz))) * 180.00 / Math.PI;
+  var Roll = (Math.atan2(xx, Math.sqrt(yy * yy + zz * zz))) * 180.00 / Math.PI;
+  var Tilt =  Math.sqrt(Pitch * Pitch + Roll * Roll);
   if (xx > 16384) {xx = 16384;}
   if (xx < -16384) {xx = -16384;}
   if (xx < 0) {xp=1; xx=-xx;}
@@ -79,9 +82,6 @@ LIS2MDL.prototype.read = function() {
   if (zz < 0) {zp=1; zz=-zz;}
   var zLL = zz & 0xff;
   var zHH = (zz >> 8);
-  var Pitch = (Math.atan2(yy, Math.sqrt(xx * xx + zz * zz))) * 180.00 / Math.PI;
-  var Roll = (Math.atan2(xx, Math.sqrt(yy * yy + zz * zz))) * 180.00 / Math.PI;
-  var Tilt =  Math.sqrt(Pitch * Pitch + Roll * Roll);
   return {
     x:  xx,
     y:  yy, //d.getInt16(2,1),

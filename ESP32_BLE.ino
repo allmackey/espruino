@@ -30,7 +30,7 @@ const char *GScriptId = "AKfycbwOuhwCnaZBXrncSYUMbCGeuEOFeK0dMcahpPF0F7M9xNRU3Vu
 //AKfycbyEqh_onXnIHvvMp1-UUVKx8-fvfzdIRK9Xj6hnzz2vKZTmcdU //oldsheet
 
 float pi = 3.141592653589793238462643383279502884f;
-char my_polynominal[70] = "-0.00031*tilt^2+0.557*tilt-14.054";
+char my_polynominal[70] = "-0.262295082*tilt + 21.63934426"; //"0.006867634*tilt^2 - 1.078466627*tilt + 41.82981325";//"-0.053134449*tilt^2 + 7.091907484*tilt - 221.647195";//"-0.00031*tilt^2+0.557*tilt-14.054";
 float temp;    // Stores the real internal chip temperature in degrees Celsius
 float Volt, Temperatur, Tilt, Gravity;
 int num_of_meters = 0, indx = 0, scanning = 1;
@@ -198,6 +198,7 @@ int checkID(String address){
 }
 
 int parseData(String strdata, String addr, int index) {
+  Serial.println(strdata);
   String rssi = strdata.substring(48,50);
   String minor = strdata.substring(44,48);
   String majorBatt = strdata.substring(40,44);
@@ -211,7 +212,21 @@ int parseData(String strdata, String addr, int index) {
   String hH = strdata.substring(24,26);
   String tL = strdata.substring(22,24);
   String tH = strdata.substring(20,22);
-         
+  String xP = strdata.substring(18,20);
+  String yP = strdata.substring(16,18);
+  String zP = strdata.substring(14,16);
+  //Serial.println(xP);
+  //Serial.println(yP);
+  //Serial.println(zP);
+  //Serial.println(xH);
+  //Serial.println(xL);
+  //Serial.println(yH);
+  //Serial.println(zL);
+  //Serial.println(zH);
+  //Serial.println(zL);
+  signed long int xHH = strtol(xH.c_str(), NULL, 8);
+  signed long int xLL = strtol(xL.c_str(), NULL, 8);
+  
   String tempstr = tH+tL;
   String humstr = hH + hL;
    //[0, 0, 0, 0, 0, 0, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH]
@@ -222,14 +237,21 @@ int parseData(String strdata, String addr, int index) {
   String zstr = zH + zL;
   float batt = strtol(majorBatt.c_str(), NULL, 16)/1000.0;
   signed long int x = strtol(xstr.c_str(), NULL, 16);
-  if (x > 0x7fff)
-      x -= 0x10000;
   signed long int y = strtol(ystr.c_str(), NULL, 16);
-  if (y > 0x7fff)
-      y -= 0x10000;
   signed long int z = strtol(zstr.c_str(), NULL, 16);
-  float pitch = (atan2(y, sqrt(x * x + z * z))) * 180.00 / pi;
-  float roll = (atan2(x, sqrt(y * y + z * z))) * 180.00 / pi;
+  if(xP.toInt() == 1) { x = -x;}
+  if(yP.toInt() == 1) { y = -y;}
+  if(zP.toInt() == 1) { z = -z;}
+  //Serial.println(x);
+  //Serial.println(y);
+  //Serial.println(z);
+  float pitch = (atan2(x, sqrt(y * y + z * z))) * 180.00 / pi;
+  float roll = (atan2(z, sqrt(x * x + y * y))) * 180.00 / pi;
+  //loat pitch = (atan2(y, sqrt(x * x + z * z))) * 180.00 / pi;
+  //float pitch = (atan2(z, sqrt(x * x + y * y))) * 180.00 / pi;
+  //float roll = (atan2(y, sqrt(x * x + z * z))) * 180.00 / pi;
+  //float pitch = (atan2(y, sqrt(x * x + z * z))) * 180.00 / pi;
+  //float roll = (atan2(x, sqrt(y * y + z * z))) * 180.00 / pi;
   Tilt =  sqrt(pitch * pitch + roll * roll);
   Gravity = calculateGravity();
   float SG = 1 + (Gravity / (258.60 - ( (Gravity/258.20) *227.10) ) );

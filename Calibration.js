@@ -20,4 +20,4 @@ var t = setInterval(function () {
   }
   tilt = tilt/ic;
   print(tilt);
-}, 30000);
+}, 5000);

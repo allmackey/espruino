@@ -1,35 +1,16 @@
 var b = digitalRead(D25);
-/*var i2c = new I2C();
-i2c.setup({ scl : D30, sda: D31 });
-var acc = require("https://github.com/allmackey/espruino/blob/master/KX022.js").connectI2C(i2c);
-acc.init();
-var ic = 1;
-var i = 0;
-var xL = 0;
-var xH = 0;
-var yL = 0;
-var yH = 0;
-var zL = 0;
-var zH = 0;
-var xP = 0;
-var yP = 0;
-var zP = 0;
-var xLOld = 0;
-var xHOld = 0;
-var yLOld = 0;
-var yHOld = 0;
-var zLOld = 0;
-var zHOld = 0;
-var cnt = 0;
-var batt = Math.round(NRF.getBattery()*1000);
-var i = 0;
-var sht =  require("https://github.com/allmackey/espruino/blob/master/SHT3.js").connect(i2c,0x44);
-var tH = 0;
-var tL = 0;
-var hH = 0;
-var hL = 0;*/
-var eq1l = 0;
-var equ2l= 0;
+var eq1l = -1.08695653;
+var eq2l= 60.52173913;
+var eq1 = parseFloat(require("Storage").read("eq1"));
+var eq2 = parseFloat(require("Storage").read("eq2"));
+var f = 0;
+var EVNT = 0;
+if(isNaN(eq1) == 1) {
+  eq1 = eq1l;
+}
+if(isNaN(eq2) == 1) {
+  eq2 = eq2l;
+}
 
 NRF.setServices({
   0xFFFF : {
@@ -48,19 +29,24 @@ NRF.setServices({
     0xFFF1 : {
       readable : true,
       writable : true,
-      value : "-1.086956522",
+      notify: true,
+      value : f,
       onWrite : function(evt) {
-        var eq1 = evt.data[0]; 
-        require("Storage").write(".boot0", `eq1 = evt.data[0]; eq2 = eq2l`);
+        eq1 = ((evt.data).join("")).toString();
+        f = require("Storage").write("eq1", eq1,0,20);
       }
     },
     0xFFF2 : {
       readable : true,
       writable : true,
-      value : "-1.086956522",
+      notify: true,
+      value : f,
       onWrite : function(evt) {
-        var eq1 = evt.data[0]; 
-        require("Storage").write(".boot0", eq1 = eq1l);
+        for (var i=0, strLen=str.length; i<strLen; i++) {
+        
+        }
+        eq2 = ((evt.data).join("")).toString(); 
+        f = require("Storage").write("eq2", eq2,0,20);
       }
     }
   }

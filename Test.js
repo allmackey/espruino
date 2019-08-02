@@ -32,8 +32,9 @@ NRF.setServices({
       notify: true,
       value : f,
       onWrite : function(evt) {
-        eq1 = ((evt.data).join("")).toString();
-        f = require("Storage").write("eq1", eq1,0,20);
+        var eq1s = hex_to_ascii(evt.data);
+        eq1 = parseFloat(eq1s);
+        f = require("Storage").write("eq1", eq1s,0,20);
       }
     },
     0xFFF2 : {
@@ -41,13 +42,22 @@ NRF.setServices({
       writable : true,
       notify: true,
       value : f,
+      maxLen : 20,
       onWrite : function(evt) {
-        for (var i=0, strLen=str.length; i<strLen; i++) {
-        
-        }
-        eq2 = ((evt.data).join("")).toString(); 
-        f = require("Storage").write("eq2", eq2,0,20);
+        var eq2s = hex_to_ascii(evt.data);
+        eq2 = parseFloat(eq2s);
+        f = require("Storage").write("eq2", eq2s,0,20);
       }
     }
   }
 },{ advertise: [ 'FFFF' ] });
+
+function hex_to_ascii(str1)
+ {
+	//var hex  = str1.toString();
+	var str = '';
+	for (var n = 0; n < str1.length; n++) {
+		str += String.fromCharCode(str1[n]);
+	}
+	return str;
+ }

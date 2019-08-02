@@ -14,6 +14,9 @@ var zH = 0;
 var xP = 0;
 var yP = 0;
 var zP = 0;
+var Tilt = 0;
+var plato = 0;
+var SG = 0;
 var xLOld = 0;
 var xHOld = 0;
 var yLOld = 0;
@@ -28,6 +31,69 @@ var tH = 0;
 var tL = 0;
 var hH = 0;
 var hL = 0;
+
+var eq1l = -1.08695653;
+var eq2l= 60.52173913;
+var eq1 = parseFloat(require("Storage").read("eq1"));
+var eq2 = parseFloat(require("Storage").read("eq2"));
+var f = 0;
+var EVNT = 0;
+if(isNaN(eq1) == 1) {
+  eq1 = eq1l;
+}
+if(isNaN(eq2) == 1) {
+  eq2 = eq2l;
+}
+
+NRF.setServices({
+  0xFFFF : {
+    0xFFF0 : {
+      writable : true,
+      onWrite : function(evt) {
+        if(evt.data[0]) {
+          b = digitalRead(D25);
+          if(b==0) {
+            digitalWrite(D26, 1);
+            reset(true);
+          }
+        }
+      }
+    },
+    0xFFF1 : {
+      readable : true,
+      writable : true,
+      notify: true,
+      value : f,
+      onWrite : function(evt) {
+        var eq1s = hex_to_ascii(evt.data);
+        eq1 = parseFloat(eq1s);
+        f = require("Storage").write("eq1", eq1s,0,20);
+      }
+    },
+    0xFFF2 : {
+      readable : true,
+      writable : true,
+      notify: true,
+      value : f,
+      maxLen : 20,
+      onWrite : function(evt) {
+        var eq2s = hex_to_ascii(evt.data);
+        eq2 = parseFloat(eq2s);
+        f = require("Storage").write("eq2", eq2s,0,20);
+      }
+    }
+  }
+},{ advertise: [ 'FFFF' ] });
+
+function hex_to_ascii(str1)
+ {
+	//var hex  = str1.toString();
+	var str = '';
+	for (var n = 0; n < str1.length; n++) {
+		str += String.fromCharCode(str1[n]);
+	}
+	return str;
+ }
 
 var t = setInterval(function () {
   b = digitalRead(D25);
@@ -44,30 +110,11 @@ var t = setInterval(function () {
   xP = acc.read().xP;
   yP = acc.read().yP;
   zP = acc.read().zP;
- /*   i = 0;
-  for(i=0; i<ic; i++) {
-    xL = xL + acc.read().xL;
-    xH = xH + acc.read().xH;
-    yL = yL + acc.read().yL;
-    yH = yH + acc.read().yH;
-    zL = zL + acc.read().zL;
-    zH = zH + acc.read().zH;
-  }*/
-  xL = Math.round(xL/ic);
-  xH = Math.round(xH/ic);
-  yL = Math.round(yL/ic);
-  yH = Math.round(yH/ic);
-  zL = Math.round(zL/ic);
-  zH = Math.round(zH/ic);
-  batt = Math.round(NRF.getBattery()*1000);
-  /*print(batt);
-  print(xL);
-  print(xH);
-  print(yL);
-  print(yH);
-  print(zL);
-  print(zH);*/
-
+  Tilt = acc.read().tilt;
+  plato = eq1*Tilt+eq2;
+  SG = 1 + (plato / (258.60 - ( (plato/258.20) *227.10) ) );
+  print(plato);
+  print(SG);
   tH = sht.readData().tH;
   tL = sht.readData().tL;
   hH = sht.readData().hH;

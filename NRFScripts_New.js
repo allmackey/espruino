@@ -1,4 +1,4 @@
-var b = digitalRead(D25);
+//var b = digitalRead(D25);
 var i2c = new I2C();
 i2c.setup({ scl : D30, sda: D31 });
 var acc = require("https://github.com/allmackey/espruino/blob/master/KX022.js").connectI2C(i2c);
@@ -17,6 +17,10 @@ var zP = 0;
 var Tilt = 0;
 var plato = 0;
 var SG = 0;
+var SGH = 0;
+var SGL = 0;
+var SGLH = 0;
+var SGLL = 0;
 var xLOld = 0;
 var xHOld = 0;
 var yLOld = 0;
@@ -50,13 +54,14 @@ NRF.setServices({
     0xFFF0 : {
       writable : true,
       onWrite : function(evt) {
-        if(evt.data[0]) {
-          b = digitalRead(D25);
-          if(b==0) {
-            digitalWrite(D26, 1);
-            reset(true);
-          }
-        }
+        //if(evt.data[0]) {
+        var kl = 0;
+          digitalWrite(D26, 1);
+        for (var n = 0; n < 6000; n++) {
+		     kl += 1;
+	    }
+          reset(true);
+        //}
       }
     },
     0xFFF1 : {
@@ -64,6 +69,7 @@ NRF.setServices({
       writable : true,
       notify: true,
       value : f,
+      maxLen : 20,
       onWrite : function(evt) {
         var eq1s = hex_to_ascii(evt.data);
         eq1 = parseFloat(eq1s);
@@ -96,11 +102,11 @@ function hex_to_ascii(str1)
  }
 
 var t = setInterval(function () {
-  b = digitalRead(D25);
+  /*b = digitalRead(D25);
   if(b==0) {
     digitalWrite(D26, 1);
     reset(true);
-  }
+  }*/
   xL = acc.read().xL;
   xH = acc.read().xH;
   yL = acc.read().yL;
@@ -113,14 +119,25 @@ var t = setInterval(function () {
   Tilt = acc.read().tilt;
   plato = eq1*Tilt+eq2;
   SG = 1 + (plato / (258.60 - ( (plato/258.20) *227.10) ) );
-  print(plato);
+  if (SG >= 1) {
+    SGH = 1;
+  } else {
+     SGH = 0;
+  }
+  SGL = parseInt((SG.toString()).substring(2, 5));
+  SGLL =SGL & 0xff;
+  SGLH= (SGL >> 8);
   print(SG);
+  print(SGH);
+  print(SGL);
+  print(SGLH);
+  print(SGLL);
   tH = sht.readData().tH;
   tL = sht.readData().tL;
   hH = sht.readData().hH;
   hL = sht.readData().hL;
   require("https://github.com/allmackey/espruino/blob/master/BrewBeacon.js").advertise({
-  uuid : [0, 0, 0, zP, yP, xP, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
+  uuid : [SGH, SGLH, SGLL, zP, yP, xP, tH, tL, hH, hL, xL, xH, yL, yH, zL, zH], // ibeacon uuid
   major : batt, // optional
   minor : 0x0001, // optional
   rssi : -59, // optional RSSI at 1 meter distance in dBm

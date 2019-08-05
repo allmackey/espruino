@@ -45,7 +45,7 @@ LIS2MDL.prototype.init = function() {
   res = new DataView(this.r(REG.CNTL1,1).buffer);
   print(res.getUint8(0,1));
   res = new DataView(this.r(REG.LP_CNTL,1).buffer);
-  this.w(REG.LP_CNTL, 0x00); //NEW
+  this.w(REG.LP_CNTL, 0x03); //NEW
   res = new DataView(this.r(REG.LP_CNTL,1).buffer);
   print(res.getUint8(0,1));
   res = new DataView(this.r(REG.CNTL1,1).buffer);

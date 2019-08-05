@@ -5,7 +5,7 @@
 #include <BLEDevice.h>
 #include <BLEUtils.h>
 #include <BLEScan.h>
-#include "tinyexpr.h"
+//#include "tinyexpr.h"
 #include <WiFiClientSecure.h>
 #include "esp_system.h"
 
@@ -30,7 +30,7 @@ const char *GScriptId = "AKfycbwOuhwCnaZBXrncSYUMbCGeuEOFeK0dMcahpPF0F7M9xNRU3Vu
 //AKfycbyEqh_onXnIHvvMp1-UUVKx8-fvfzdIRK9Xj6hnzz2vKZTmcdU //oldsheet
 
 float pi = 3.141592653589793238462643383279502884f;
-char my_polynominal[70] = "-0.262295082*tilt + 21.63934426"; //"0.006867634*tilt^2 - 1.078466627*tilt + 41.82981325";//"-0.053134449*tilt^2 + 7.091907484*tilt - 221.647195";//"-0.00031*tilt^2+0.557*tilt-14.054";
+//char my_polynominal[70] = "-1.086956522*tilt + 66.52173913"; //"0.006867634*tilt^2 - 1.078466627*tilt + 41.82981325";//"-0.053134449*tilt^2 + 7.091907484*tilt - 221.647195";//"-0.00031*tilt^2+0.557*tilt-14.054";
 float temp;    // Stores the real internal chip temperature in degrees Celsius
 float Volt, Temperatur, Tilt, Gravity;
 int num_of_meters = 0, indx = 0, scanning = 1;
@@ -215,10 +215,11 @@ int parseData(String strdata, String addr, int index) {
   String xP = strdata.substring(18,20);
   String yP = strdata.substring(16,18);
   String zP = strdata.substring(14,16);
-  //Serial.println(xP);
-  //Serial.println(yP);
-  //Serial.println(zP);
-  //Serial.println(xH);
+  String SGL = strdata.substring(12,14);
+  String SGH = strdata.substring(10,12);
+  String SGstr = SGH+SGL;
+  float SGI = strtol(SGstr.c_str(), NULL, 16);
+  float SG = SGI/10000;
   //Serial.println(xL);
   //Serial.println(yH);
   //Serial.println(zL);
@@ -246,23 +247,19 @@ int parseData(String strdata, String addr, int index) {
   //Serial.println(y);
   //Serial.println(z);
   float pitch = (atan2(x, sqrt(y * y + z * z))) * 180.00 / pi;
-  float roll = (atan2(z, sqrt(x * x + y * y))) * 180.00 / pi;
-  //loat pitch = (atan2(y, sqrt(x * x + z * z))) * 180.00 / pi;
-  //float pitch = (atan2(z, sqrt(x * x + y * y))) * 180.00 / pi;
-  //float roll = (atan2(y, sqrt(x * x + z * z))) * 180.00 / pi;
-  //float pitch = (atan2(y, sqrt(x * x + z * z))) * 180.00 / pi;
-  //float roll = (atan2(x, sqrt(y * y + z * z))) * 180.00 / pi;
+  float roll = (atan2(y, sqrt(z * z + x * x))) * 180.00 / pi;
   Tilt =  sqrt(pitch * pitch + roll * roll);
-  Gravity = calculateGravity();
-  float SG = 1 + (Gravity / (258.60 - ( (Gravity/258.20) *227.10) ) );
+  //Gravity = calculateGravity();
+  //float SG = 1 + (Gravity / (258.60 - ( (Gravity/258.20) *227.10) ) );
+  float GravityN = (-1 * 616.868) + (1111.14 * SG) - (630.272 * (SG * SG)) + (135.997 * (SG * SG * SG));
 
-  bml[index] = {addr, SG, Gravity, hum, Tilt, temp, batt, 1};
+  bml[index] = {addr, SG, GravityN, hum, Tilt, temp, batt, 1};
   Serial.print("BrewMeter Update: ");
   Serial.print(addr);
   Serial.print(",");
   Serial.print(SG,3);
   Serial.print(",");
-  Serial.print(Gravity,3);
+  Serial.print(GravityN,3);
   Serial.print(",");
   Serial.print(hum,3);
   Serial.print(",");
@@ -276,7 +273,7 @@ int parseData(String strdata, String addr, int index) {
 return 1;
 }
 
-float calculateGravity()
+/*float calculateGravity()
 {
   double _tilt = Tilt;
   double _temp = temp;
@@ -294,7 +291,7 @@ float calculateGravity()
     Serial.println(String(F("Parse error at ")) + err);
   }
   return _gravity;
-}
+}*/
 
 void postData(String dataString){ 
   while (WiFi.status() != WL_CONNECTED) {

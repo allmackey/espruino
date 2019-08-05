@@ -36,10 +36,12 @@ var tL = 0;
 var hH = 0;
 var hL = 0;
 
-var eq1l = -1.086956522;
-var eq2l= 66.52173913;
+var eq1l = 0;
+var eq2l = -1.086956522;
+var eq3l = 66.52173913;
 var eq1 = parseFloat(require("Storage").read("eq1"));
 var eq2 = parseFloat(require("Storage").read("eq2"));
+var eq3 = parseFloat(require("Storage").read("eq3"));
 var f = 0;
 var EVNT = 0;
 if(isNaN(eq1) == 1) {
@@ -47,6 +49,9 @@ if(isNaN(eq1) == 1) {
 }
 if(isNaN(eq2) == 1) {
   eq2 = eq2l;
+}
+if(isNaN(eq3) == 1) {
+  eq3 = eq3l;
 }
 
 NRF.setServices({
@@ -87,6 +92,18 @@ NRF.setServices({
         eq2 = parseFloat(eq2s);
         f = require("Storage").write("eq2", eq2s,0,20);
       }
+    },
+    0xFFF3 : {
+      readable : true,
+      writable : true,
+      notify: true,
+      value : f,
+      maxLen : 20,
+      onWrite : function(evt) {
+        var eq3s = hex_to_ascii(evt.data);
+        eq3 = parseFloat(eq3s);
+        f = require("Storage").write("eq3", eq3s,0,20);
+      }
     }
   }
 },{ advertise: [ 'FFFF' ] });
@@ -118,16 +135,16 @@ var t = setInterval(function () {
   yP = tempd.yP;
   zP = tempd.zP;
   Tilt = tempd.tilt;
-  plato = (eq1*Tilt)+eq2;
-  print(Tilt);
-  print(plato);
+  plato = eq1*Tilt*Tilt + eq2*Tilt + eq3;
+  //print(Tilt);
+  //print(plato);
   SG = 1 + (plato / (258.600 - ( (plato/258.200) *227.100) ) );
   if (SG >= 1) {
     SGH = 1;
   } else {
      SGH = 0;
   }
-  print(SG);
+  //print(SG);
   SG = Math.round(SG*10000);
   //SGL = parseInt((SG.toString()).substring(2, 5));
   SGL =SG & 0xff;

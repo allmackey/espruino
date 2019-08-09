@@ -124,6 +124,7 @@ var t = setInterval(function () {
     digitalWrite(D26, 1);
     reset(true);
   }*/
+  batt = Math.round(NRF.getBattery()*1000);
   tempd = acc.read();
   xL = tempd.xL;
   xH = tempd.xH;
